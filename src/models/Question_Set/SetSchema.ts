@@ -10,8 +10,22 @@ const userSchema = new mongoose.Schema({
         difficulty: { type: String },
         questions:[
             {
-                type:mongoose.Types.ObjectId,
-                ref:"question"
+                bank_id:{
+                    type:mongoose.Types.ObjectId,
+                    ref:"question"
+                },
+                technology: { type: String },
+                question_type: { type: String },
+                job_rank: { type: String },
+                difficulty: { type: String },
+                question_body: { type: String },
+                remarks: { type: String },
+                answer: { type: String },
+                options: [
+                  {
+                    type: String,
+                  },
+                ],
             }
         ]
 })

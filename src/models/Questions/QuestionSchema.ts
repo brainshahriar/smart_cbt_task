@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Question from "./QuestionDto";
+import Question from "./QuestionInterface";
 
 const questionSchema = new mongoose.Schema({
   technology: { type: String },

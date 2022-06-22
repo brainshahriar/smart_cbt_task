@@ -2,7 +2,7 @@ import express from 'express'
 import multer from 'multer';
 import path from 'path';
 import questionController from '../controllers/QuestionController';
-import userController from '../controllers/UserController';
+import setController from '../controllers/SetController';
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -21,11 +21,14 @@ const storage = multer.diskStorage({
 
 //public route
 
-router.post('/post',upload,userController.post)
-router.get('/getall',userController.get)
-router.get('/getall/:id',userController.getByid)
-router.put('/update/:id',upload,userController.update)
-router.delete('/delete/:id',userController.delete)
+// router.post('/post',upload,userController.post)
+// router.get('/getall',userController.get)
+// router.get('/getall/:id',userController.getByid)
+// router.put('/update/:id',upload,userController.update)
+// router.delete('/delete/:id',userController.delete)
+
+
+router.post('/post',setController.post)
 
 //question routes
 // router.post('/question/post',questionController.questionPost)

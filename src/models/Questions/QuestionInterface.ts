@@ -10,5 +10,4 @@ export default interface Question extends Document{
     remarks:string,
     answer:string,
     options:object,
-
 }

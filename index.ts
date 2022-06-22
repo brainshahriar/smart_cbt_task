@@ -3,7 +3,7 @@ dotenv.config()
 import express from 'express'
 import cors from 'cors';
 import connectDB from './config/connectdb'
-import userRoutes from './src/routes/UserRoutes'
+import setRoutes from './src/routes/SetRoutes'
 import questionRoutes from './src/routes/QuestionRoutes'
 import bodyParser from 'body-parser'
 
@@ -26,7 +26,7 @@ connectDB(DATABASE_URL)
 
 
 // Load Routes
-app.use("/api/user",userRoutes )
+app.use("/api/set",setRoutes )
 app.use("/api/question",questionRoutes)
 
 app.listen(port, () => {

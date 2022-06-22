@@ -42,7 +42,7 @@ const Home: React.FC = () => {
           <Navbar />
           <div className="add_btn mt-2 mb-2">
             <Link to="/register" className="btn btn-primary">
-              Add data
+              Add Questions
             </Link>
           </div>
           <table className="table">

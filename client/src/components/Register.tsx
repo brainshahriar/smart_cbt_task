@@ -2,194 +2,180 @@ import React, { useEffect, useState, useRef } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../features/userSlice";
-import { RootState } from "../features/store";
-const createObjectURL = require("create-object-url");
 
 
 const Register: React.FC = () => {
 
-  const count = useSelector((state: RootState) => state.user)
-  console.log(count);
-  const dispatch = useDispatch();
   let navigate = useNavigate();
-  let { id } = useParams();
-  const imageRef = useRef<HTMLInputElement>(null);
-  const [defaultData, setDefaultData] = useState<any>({});
-  const [imgPreview, setImgPreview] = useState<any>("");
+
 
   const [postValue, setValue] = useState<any>({
-    title: "",
-    description: "",
+    technology: "",
+    question_type: "",
+    job_rank: "",
+    difficulty: "",
+    question_body: "",
+    remarks: "",
+    answer: "",
   });
 
-  const getData = async (userId:any) => {
-    await axios
-      .get(`http://localhost:8000/api/user/getall/${userId}`)
-      .then((result) => {
-        setDefaultData(result.data.result);
-        setImgPreview(result.data.result?.image);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const [optionValue,setOptionValue] = useState<any>([{
+    options:''
+  }])
+  const handleClick=()=>{
+    setOptionValue([...optionValue,{option:''}])
+  }
 
-  useEffect(() => {
-    getData(id);
-  }, [id]);
+  const handleOptionChange=(e:any,index:any)=>{
+    const{name,value}=e.target.value;
+    const list = [...optionValue];
+    console.log(list);
+    
+    list[index][name]=value;
+    setOptionValue(list);
+  }
+
   const handleData = (e: any) => {
     const { name, value } = e.target;
-    setValue((val:any) => {
+    setValue((val: any) => {
       return {
         ...val,
         [name]: value,
       };
     });
-    dispatch(addUser(postValue))
   };
 
-  const [image, setImage] = useState<any>({});
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    let formTable = new FormData();
-    if (postValue.title) {
-      formTable.append("title", postValue.title);
-    }
-    if (postValue.description) {
-      formTable.append("description", postValue.description);
-    }
-    if (image.name) {
-      formTable.append("image", image);
-    }
-    const createTable = async () => {
-      await axios({
-        method: "post",
-        url: "http://localhost:8000/api/user/post",
-        data: formTable,
-        headers: {
-          "Content-Type": `multipart/form-data`,
-        },
-      });
+    const data: any = {
+      technology: postValue.technology,
+      question_type: postValue.question_type,
+      job_rank: postValue.job_rank,
+      difficulty: postValue.difficulty,
+      question_body: postValue.question_body,
+      remarks: postValue.remarks,
+      answer: postValue.answer,
+      options: postValue.options,
     };
 
+    console.log(data);
+
+    const createTable = async () => {
+      await axios.post("http://localhost:8000/api/question/post", data);
+    };
     createTable();
     alert("Inserted");
-
-    // var dirtyFormID = 'myform';
-    // var resetForm:any= document.getElementById(dirtyFormID);
-    // resetForm.reset();
-
-    // setValue({
-    //     title: "",
-    //     description: "",
-    //   })
-    //   setImage({})
-
     navigate("/home");
-    dispatch(addUser(postValue))
-    dispatch(addUser(image))
+    // dispatch(addUser(postValue))
+    // dispatch(addUser(image))
   };
 
-  console.log(postValue,image);
-  
-  const handleUpdate = (e:any)=>{
-    e.preventDefault();
-    let formTable = new FormData();
-    if (postValue.title) {
-      formTable.append("title", postValue.title);
-    }
-    if (postValue.description) {
-      formTable.append("description", postValue.description);
-    }
-    if (image.name) {
-      formTable.append("image", image);
-     }
-    const updateTable = async () => {
-      await axios({
-        method: "put",
-        url: `http://localhost:8000/api/user/update/${id}`,
-        data: formTable,
-        headers: {
-          "Content-Type": `multipart/form-data`,
-        },
-      })
-    };
-    updateTable();
-    alert("Updated");
-    navigate("/home");
-  }
+
+
   return (
     <>
       <div className="container">
         <Navbar />
         <NavLink to="/">home</NavLink>
-        <form className="mt-4" id="myform" onSubmit={defaultData ? handleUpdate : handleSubmit}>
+        <form className="mt-4" id="myform" onSubmit={handleSubmit}>
           <div className="row">
             <div className="mb-3 col-lg-6 col-md-6 col-12">
-              <label className="form-label">Title</label>
+              <label className="form-label">Technology</label>
               <input
-                defaultValue={defaultData && defaultData.title}
                 type="text"
-                name="title"
+                name="technology"
                 className="form-control"
                 onChange={handleData}
               />
             </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Question Type</label>
+              <input
+                type="text"
+                name="question_type"
+                className="form-control"
+                onChange={handleData}
+              />
+            </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Job Rank</label>
+              <input
+                type="text"
+                name="job_rank"
+                className="form-control"
+                onChange={handleData}
+              />
+            </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Difficulty</label>
+              <input
+                type="text"
+                name="difficulty"
+                className="form-control"
+                onChange={handleData}
+              />
+            </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Remarks</label>
+              <input
+                type="text"
+                name="remarks"
+                className="form-control"
+                onChange={handleData}
+              />
+            </div>
+
+
             <div className="mb-3 col-lg-12 col-md-12 col-12">
-              <label className="form-label">Description</label>
+              <label className="form-label">Question Title</label>
               <textarea
-                name="description"
-                defaultValue={defaultData && defaultData.description}
+                name="question_body"
                 className="form-control"
                 onChange={handleData}
                 cols={30}
                 rows={5}
               ></textarea>
             </div>
-            <div className="mb-3 col-lg-6 col-md-6 col-12">
-              <label className="form-label">Image</label>
-              <div
-                className="image-div"
-                onClick={() => imageRef.current?.click()}
-              >
-                {imgPreview ? (
-                  <img
-                    className="previewImg"
-                    src={
-                      typeof imgPreview === "object"
-                        ? createObjectURL(imgPreview)
-                        : `http://localhost:8000/public/${imgPreview}`
-                    }
-                    alt=""
-                  />
-                ) : (
-                  <p>Selet Image</p>
-                )}
-              </div>
-              <input
-                type="file"
-                name="image"
-                style={{ display: "none" }}
-                ref={imageRef}
-                onChange={(e: any) => {
-                  setImage(e.currentTarget.files[0]);
-                  setImgPreview(e.currentTarget.files[0]);
-                }}
+            <div className="mb-3 col-lg-12 col-md-12 col-12">
+              <label className="form-label">Answer</label>
+              <textarea
+                name="answer"
                 className="form-control"
-              />
+                onChange={handleData}
+                cols={30}
+                rows={5}
+              ></textarea>
             </div>
+            {
+              optionValue.map((x: any,i: any)=>{
+                return(
+                  <div className="mb-3 col-lg-6 col-md-6 col-12">
+                  <label className="form-label">Options</label>
+                  <input
+                    type="text"
+                    name="options"
+                    className="form-control"
+                    onChange={ e=>handleOptionChange(e,i) }
+                  />
+                  <p className="btn btn-primary" onClick={handleClick}>Add Options</p>
+                </div>
+                );
+
+})
+
+            }
 
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
           </div>
         </form>
+
       </div>
     </>
   );
 };
 
 export default Register;
+

@@ -2,9 +2,9 @@ import setModel from "../models/Question_Set/SetSchema";
 import { Request, Response } from "express"; 
 
 class setService {
-  // static getAllUser = async () => {
-  //   return await userModel.find({}).exec();
-  // };
+  static getAllUser = async () => {
+    return await setModel.find({}).exec();
+  };
 
   static postSet = async (req: Request, res: Response) => {
     const newPost = new setModel({

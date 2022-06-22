@@ -12,20 +12,20 @@ class setController {
       return res.send({ status: "Server side error" });
     }
   }
-  // async get(req: Request, res: Response) {
-  //   try {
-  //     const users = await userService.getAllUser();
-  //     if (!users) {
-  //       return res.send({ status: "Something error" });
-  //     }
-  //     res.status(200).json({
-  //       result: users,
-  //       message: "success",
-  //     });
-  //   } catch (error) {
-  //     return res.send({ status: "Something error" });
-  //   }
-  // }
+  async get(req: Request, res: Response) {
+    try {
+      const sets = await setService.getAllUser();
+      if (!sets) {
+        return res.send({ status: "Something error" });
+      }
+      res.status(200).json({
+        result: sets,
+        message: "success",
+      });
+    } catch (error) {
+      return res.send({ status: "Something error" });
+    }
+  }
 
   // async getByid(req: Request, res: Response) {
   //   try {

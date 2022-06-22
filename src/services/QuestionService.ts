@@ -6,7 +6,7 @@ class questionService {
     const savePost = await newPost.save();
     return savePost;
   };
-  static getAllQuestion = async () => {
+  static getAllQuestion = async () => { 
     return await questionModel.find({}).exec();
   };
   static getById = async (res: Response, req: Request) => {

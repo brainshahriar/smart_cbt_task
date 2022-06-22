@@ -1,23 +1,23 @@
 import express from 'express'
-import multer from 'multer';
-import path from 'path';
-import questionController from '../controllers/QuestionController';
+// import multer from 'multer';
+// import path from 'path';
+// import questionController from '../controllers/QuestionController';
 import setController from '../controllers/SetController';
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null,'./public/uploads')
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now()+ path.extname(file.originalname))
-    }
-  })
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//       cb(null,'./public/uploads')
+//     },
+//     filename: function (req, file, cb) {
+//       cb(null, Date.now()+ path.extname(file.originalname))
+//     }
+//   })
   
   
-  const upload = multer({
-    storage:storage
-  }).single("image")
+//   const upload = multer({
+//     storage:storage
+//   }).single("image")
 
 //public route
 
@@ -29,6 +29,8 @@ const storage = multer.diskStorage({
 
 
 router.post('/post',setController.post)
+router.get('/getall',setController.get)
+
 
 //question routes
 // router.post('/question/post',questionController.questionPost)

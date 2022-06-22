@@ -16,7 +16,7 @@ class questionController{
             if (!questions) {
               return res.send({ status: "Something error" });
             }
-            res.status(200).json({ 
+            res.status(200).json({  
               result: questions,
               message: "success",
             });

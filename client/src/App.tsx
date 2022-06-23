@@ -8,9 +8,9 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import Register from './components/Register';
 import View from './components/View';
 import Question from './components/Question';
+import QuestionSet from './components/QuestionSet';
 
 const App:React.FC = ()=> {
   return (
@@ -20,10 +20,9 @@ const App:React.FC = ()=> {
         <Routes>
             <Route  path="/" element={<Home/>}/>
             <Route  path="/home" element={<Home/>}/>
-            <Route  path="/register" element={<Register/>}/>
-            <Route  path="/register/:id" element={<Register/>}/>
+            <Route  path="/question" element={<Question/>}/>
+            <Route  path="/questionset" element={<QuestionSet/>}/>
             <Route  path="/view/:id" element={<View/>}/>
-            <Route  path="/question/:id" element={<Question/>}/>
           </Routes>
       </Router>
     </div>

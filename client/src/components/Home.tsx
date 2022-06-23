@@ -41,8 +41,13 @@ const Home: React.FC = () => {
         <div className="container">
           <Navbar />
           <div className="add_btn mt-2 mb-2">
-            <Link to="/register" className="btn btn-primary">
+            <Link to="/question" className="btn btn-primary">
               Add Questions
+            </Link>
+          </div>
+          <div className="add_btn mt-2 mb-2">
+            <Link to="/questionset" className="btn btn-primary">
+              Create Question Set
             </Link>
           </div>
           <table className="table">

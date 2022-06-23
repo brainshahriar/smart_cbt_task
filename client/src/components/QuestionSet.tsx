@@ -1,12 +1,25 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { Button, Modal } from "react-bootstrap";
 import axios from "axios";
+const QuestionSet: React.FC = () => {
+  const [show, setShow] = useState(false);
 
-const Question: React.FC = () => {
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   let navigate = useNavigate();
 
   const [postValue, setValue] = useState<any>({
+    name:"",
+    deadline:"",
+    technology: "",
+    job_rank: "",
+    difficulty: "",
+  });
+
+  const [questionValue,setQuestionValue]=useState<any>({
     technology: "",
     question_type: "",
     job_rank: "",
@@ -14,7 +27,7 @@ const Question: React.FC = () => {
     question_body: "",
     remarks: "",
     answer: "",
-  });
+  })
 
   const [optionDiv, setOptionDiv] = useState<any>([
     {
@@ -24,7 +37,6 @@ const Question: React.FC = () => {
   const handleClick = () => {
     setOptionDiv([...optionDiv, { option: "" }]);
   };
-
   const [optionValue, setOptionValue] = useState<any>([]);
   const handleOptionChange = (e: any, index: any) => {
     const newOptions = [...optionValue];
@@ -34,7 +46,7 @@ const Question: React.FC = () => {
 
   const handleData = (e: any) => {
     const { name, value } = e.target;
-    setValue((val: any) => {
+    setQuestionValue((val: any) => {
       return {
         ...val,
         [name]: value,
@@ -42,49 +54,48 @@ const Question: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    const data: any = {
-      technology: postValue.technology,
-      question_type: postValue.question_type,
-      job_rank: postValue.job_rank,
-      difficulty: postValue.difficulty,
-      question_body: postValue.question_body,
-      remarks: postValue.remarks,
-      answer: postValue.answer,
-      options: optionValue,
-    };
-
-
-    const createTable = async () => {
-      await axios.post("http://localhost:8000/api/question/post", data);
-    };
-    createTable();
-    alert("Inserted");
-    navigate("/home");
+  const handleQuestionData = (e: any) => {
+    const { name, value } = e.target;
+    setQuestionValue((val: any) => {
+      return {
+        ...val,
+        [name]: value,
+      };
+    });
   };
-
+  console.log("aa",postValue);
+  console.log("bb",optionValue);
+  
   return (
     <>
       <div className="container">
         <Navbar />
         <NavLink to="/">home</NavLink>
-        <form className="mt-4" id="myform" onSubmit={handleSubmit}>
+        <form className="mt-4" id="myform">
           <div className="row">
             <div className="mb-3 col-lg-6 col-md-6 col-12">
-              <label className="form-label">Technology</label>
+              <label className="form-label">Set Name</label>
               <input
                 type="text"
-                name="technology"
+                name="name"
                 className="form-control"
                 onChange={handleData}
               />
             </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
-              <label className="form-label">Question Type</label>
+              <label className="form-label">Deadline</label>
               <input
                 type="text"
-                name="question_type"
+                name="deadline"
+                className="form-control"
+                onChange={handleData}
+              />
+            </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Technology</label>
+              <input
+                type="text"
+                name="job_rank"
                 className="form-control"
                 onChange={handleData}
               />
@@ -98,6 +109,7 @@ const Question: React.FC = () => {
                 onChange={handleData}
               />
             </div>
+
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Difficulty</label>
               <input
@@ -107,13 +119,58 @@ const Question: React.FC = () => {
                 onChange={handleData}
               />
             </div>
+            <Button className="btn btn-primary" onClick={handleShow}>
+              Add Questions
+            </Button>
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Questions</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+              <div className="row">
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Technology</label>
+              <input
+                type="text"
+                name="technology"
+                className="form-control"
+                onChange={handleQuestionData}
+              />
+            </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Question Type</label>
+              <input
+                type="text"
+                name="question_type"
+                className="form-control"
+                onChange={handleQuestionData}
+              />
+            </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Job Rank</label>
+              <input
+                type="text"
+                name="job_rank"
+                className="form-control"
+                onChange={handleQuestionData}
+              />
+            </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+              <label className="form-label">Difficulty</label>
+              <input
+                type="text"
+                name="difficulty"
+                className="form-control"
+                onChange={handleQuestionData}
+              />
+            </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Remarks</label>
               <input
                 type="text"
                 name="remarks"
                 className="form-control"
-                onChange={handleData}
+                onChange={handleQuestionData}
               />
             </div>
 
@@ -122,7 +179,7 @@ const Question: React.FC = () => {
               <textarea
                 name="question_body"
                 className="form-control"
-                onChange={handleData}
+                onChange={handleQuestionData}
                 cols={30}
                 rows={5}
               ></textarea>
@@ -132,7 +189,7 @@ const Question: React.FC = () => {
               <textarea
                 name="answer"
                 className="form-control"
-                onChange={handleData}
+                onChange={handleQuestionData}
                 cols={30}
                 rows={5}
               ></textarea>
@@ -151,15 +208,27 @@ const Question: React.FC = () => {
             <p className="btn btn-primary" onClick={handleClick}>
               Add Options
             </p>
-
-            <button type="submit" className="btn btn-primary">
+          </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            <br />
+          </div>
+          <br />
+          <button type="submit" className="btn btn-primary">
               Submit
             </button>
-          </div>
         </form>
       </div>
     </>
   );
 };
 
-export default Question;
+export default QuestionSet;

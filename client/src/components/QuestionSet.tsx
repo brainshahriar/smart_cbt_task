@@ -140,6 +140,15 @@ console.log(questionArray);
       const newQuesArr = [...questionArray, newObject];
         setQuestionArray(newQuesArr);    
   }
+
+  const removeArray=(i:any)=>{
+      const newQuesArr=[...questionArray]
+      newQuesArr.splice(i, 1)
+    //   console.log(newQuesArr);
+        setQuestionArray(newQuesArr)
+    
+      
+  }
   
   return (
     <>
@@ -202,34 +211,6 @@ console.log(questionArray);
             <br />
             <div >
             <div className="mt-5">
-        <div className="container">
-        <h3>Added Questions</h3>
-          <table className="table">
-            <thead>
-              <tr className="table-dark">
-                <th scope="col">id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {questionArray &&
-                questionArray.map((element:any, id:any) => {
-                  return (
-                    <tr key={id}>
-                      <th scope="row">{id + 1}</th>
-                      <td>{element.question_body}</td>
-                      <td className="d-flex justify-content-between">
-                        <button className="btn btn-danger">
-                          Remove
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
-        </div>
       </div>  
         </div>
 
@@ -337,6 +318,34 @@ console.log(questionArray);
               Submit
             </button>
         </form>
+        <div className="container">
+        <h3>Added Questions</h3>
+          <table className="table">
+            <thead>
+              <tr className="table-dark">
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {questionArray &&
+                questionArray.map((element:any,id:any,i:any) => {
+                  return (
+                    <tr key={id}>
+                      <th scope="row">{id + 1}</th>
+                      <td>{element.question_body}</td>
+                      <td className="d-flex justify-content-between">
+                        <button className="btn btn-danger" onClick={()=>removeArray(i)}>
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
 
 <br />
 <br />

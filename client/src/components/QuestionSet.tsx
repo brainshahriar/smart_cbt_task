@@ -137,9 +137,9 @@ console.log(questionArray);
   const handleQuestionBank=(question:any)=>{
       const {_id,...rest}=question
       const newObject={...rest,bank_id:_id}
-        questionArray.push(newObject)     
+      const newQuesArr = [...questionArray, newObject];
+        setQuestionArray(newQuesArr);    
   }
-  console.log(questionArray);
   
   return (
     <>
@@ -197,6 +197,42 @@ console.log(questionArray);
             <Button className="btn btn-primary" onClick={handleShow}>
               Add Questions
             </Button>
+
+            <br />
+            <br />
+            <div >
+            <div className="mt-5">
+        <div className="container">
+        <h3>Added Questions</h3>
+          <table className="table">
+            <thead>
+              <tr className="table-dark">
+                <th scope="col">id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {questionArray &&
+                questionArray.map((element:any, id:any) => {
+                  return (
+                    <tr key={id}>
+                      <th scope="row">{id + 1}</th>
+                      <td>{element.question_body}</td>
+                      <td className="d-flex justify-content-between">
+                        <button className="btn btn-danger">
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+      </div>  
+        </div>
+
             <Modal show={show} onHide={handleClose} >
               <Modal.Header closeButton>
                 <Modal.Title>Questions</Modal.Title>

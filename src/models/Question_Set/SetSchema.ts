@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
                 question_type: { type: String },
                 job_rank: { type: String },
                 difficulty: { type: String },
+                isFromQuestionBank:{type:Boolean},
                 question_body: { type: String },
                 remarks: { type: String },
                 answer: { type: String },

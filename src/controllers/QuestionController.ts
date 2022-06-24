@@ -12,7 +12,14 @@ class questionController{
     }
     static gellAllQuestion = async(req:Request,res:Response)=>{
         try {
-            const questions = await questionService.getAllQuestion();
+            let questions;
+            const {technology} = req.query;
+            if(technology === "all"){         
+                questions = await questionService.getAllQuestion();
+            }
+            else{   
+                questions= await questionService.getAllQuestionWithQuery(req.query);
+            }
             if (!questions) {
               return res.send({ status: "Something error" });
             }

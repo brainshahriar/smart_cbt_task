@@ -33,13 +33,16 @@ const Question: React.FC = () => {
   };
 
   const handleData = (e: any) => {
-    const { name, value } = e.target;
+    
+    const { name, value } = e.target; 
     setValue((val: any) => {
       return {
         ...val,
         [name]: value,
       };
     });
+ 
+    
   };
 
   const handleSubmit = (e: any) => {
@@ -54,7 +57,6 @@ const Question: React.FC = () => {
       answer: postValue.answer,
       options: optionValue,
     };
-
 
     const createTable = async () => {
       await axios.post("http://localhost:8000/api/question/post", data);
@@ -73,39 +75,44 @@ const Question: React.FC = () => {
           <div className="row">
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Technology</label>
-              <input
-                type="text"
-                name="technology"
-                className="form-control"
-                onChange={handleData}
-              />
+              <select className="form-select" name="technology"  onChange={handleData}>
+                <option selected>Open this select menu</option>
+                <option value="react">React</option>
+                <option value="php">Php</option>
+                <option value="nodejs">NodeJs</option>
+                <option value="java">Java</option>
+                <option value="ios">iOS</option>
+              </select>
             </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Question Type</label>
-              <input
-                type="text"
-                name="question_type"
-                className="form-control"
-                onChange={handleData}
-              />
+              <select className="form-select" name="question_type"  onChange={handleData}>
+                <option selected>Open this select menu</option>
+                <option value="mcq">MCQ</option>
+                <option value="coding">Coding</option>
+                <option value="text">Text</option>
+                <option value="drawing">Drawing</option>
+                <option value="uml">UML</option>
+                <option value="video">Video</option>
+              </select>
             </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Job Rank</label>
-              <input
-                type="text"
-                name="job_rank"
-                className="form-control"
-                onChange={handleData}
-              />
+              <select className="form-select" name="job_rank"  onChange={handleData}>
+                <option selected>Open this select menu</option>
+                <option value="4a">4A</option>
+                <option value="6a">6A</option>
+                <option value="7c">7C</option>
+              </select>
             </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Difficulty</label>
-              <input
-                type="text"
-                name="difficulty"
-                className="form-control"
-                onChange={handleData}
-              />
+              <select className="form-select" name="difficulty" onChange={handleData} required>
+                <option selected>Open this select menu</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
             </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Remarks</label>

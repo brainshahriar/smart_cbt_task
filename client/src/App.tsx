@@ -8,7 +8,6 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import View from './components/View';
 import Question from './components/Question';
 import QuestionSet from './components/QuestionSet';
 
@@ -22,7 +21,6 @@ const App:React.FC = ()=> {
             <Route  path="/home" element={<Home/>}/>
             <Route  path="/question" element={<Question/>}/>
             <Route  path="/questionset" element={<QuestionSet/>}/>
-            <Route  path="/view/:id" element={<View/>}/>
           </Routes>
       </Router>
     </div>

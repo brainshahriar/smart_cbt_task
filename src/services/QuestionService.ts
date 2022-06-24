@@ -9,6 +9,9 @@ class questionService {
   static getAllQuestion = async () => { 
     return await questionModel.find({}).exec();
   };
+  static getAllQuestionWithQuery = async(query:any)=>{
+    return await questionModel.find(query).exec();
+  }
   static getById = async (res: Response, req: Request) => {
     const id = req.params.id;
     return await questionModel.findById({ _id: id }).exec();

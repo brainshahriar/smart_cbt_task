@@ -5,6 +5,7 @@ export default interface Question extends Document{
     question_type:string,
     job_rank:string,
     difficulty:string,
+    isFromQuestionBank:boolean,
     question_used_count:number,
     question_body:string,
     remarks:string,

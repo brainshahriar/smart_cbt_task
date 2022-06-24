@@ -10,7 +10,7 @@ const Home: React.FC = () => {
 
   const getData = async() => {
     await axios
-      .get("http://localhost:8000/api/user/getall")
+      .get("http://localhost:8000/api/set/getall")
       .then((result) => {
         setuserData(result.data.result);
       })
@@ -23,21 +23,21 @@ const Home: React.FC = () => {
     getData();
   }, []);
 
-  const deleteRecord = async(id: any) => {
-    await axios
-      .delete(`http://localhost:8000/api/user/delete/${id}`)
-      .then((result) => {
-        alert("Deleted");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-    getData();
-  };
+  // const deleteRecord = async(id: any) => {
+  //   await axios
+  //     .delete(`http://localhost:8000/api/user/delete/${id}`)
+  //     .then((result) => {
+  //       alert("Deleted");
+  //     })
+  //     .catch((error) => {
+  //       alert(error.message);
+  //     });
+  //   getData();
+  // };
 
   return (
     <>
-      <div className="mt-5">
+          <div className="mt-5">
         <div className="container">
           <Navbar />
           <div className="add_btn mt-2 mb-2">
@@ -50,64 +50,33 @@ const Home: React.FC = () => {
               Create Question Set
             </Link>
           </div>
-          <table className="table">
-            <thead>
-              <tr className="table-dark">
-                <th scope="col">id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Image</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {userData &&
-                userData.map((element, id) => {
-                  return (
-                    <tr key={id}>
-                      <th scope="row">{id + 1}</th>
-                      <td>{element.title}</td>
-                      <td>{element.description}</td>
-                      <td>
-                        <img
-                          alt=""
-                          style={{ height: "100px", width: "100px" }}
-                          src={`http://localhost:8000/public/${element?.image}`}
-                        />
-                      </td>
-                      <td className="d-flex justify-content-between">
-                        <Link to={`/view/${element._id}`}>
-                          {" "}
-                          <button className="btn btn-success">View</button>
-                        </Link>
-                        <Link className="btn btn-primary" to={`/register/${element._id}`}>
-                          {" "}
-                          Edit
-                        </Link>
-                        <Link className="btn btn-primary" to={`/question/${element._id}`}>
-                          {" "}
-                          Add Question
-                        </Link>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => {
-                            const confirmBox = window.confirm(
-                              "Do you really want to delete " + element.title
-                            );
-                            if (confirmBox === true) {
-                              deleteRecord(element._id);
-                            }
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+          <div className=" d-flex flex-row flex-wrap ">
+          {
+      userData && userData.map((element,id)=>{
+        return(
+          <div className="card m-2" style={{ width: "15rem" }}>
+          <div className="card-body">
+            <h5 className="card-title">Set Name : {element.name}</h5>
+            <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+            <p className="card-text">
+              Some quick example text to build on the card title and make up
+              the bulk of the card's content.
+            </p>
+            <a href="#" className="card-link">
+              Card link
+            </a>
+            <a href="#" className="card-link">
+              Another link
+            </a>
+          </div>
         </div>
+      
+        )
+      })
+    }
+  </div>
+        </div>
+        
       </div>
     </>
   );

@@ -8,11 +8,13 @@ const QuestionSet: React.FC = () => {
 
   const [bankData, setbankData] = useState<any[]>([]);
 
-  const [selectedData,setSelectedData]=useState<any>("all");
+  const [selectedData, setSelectedData] = useState<any>("all");
 
   const getData = async () => {
     await axios
-      .get(`http://localhost:8000/api/question/getall?technology=${selectedData}`)
+      .get(
+        `http://localhost:8000/api/question/getall?technology=${selectedData}`
+      )
       .then((result) => {
         setbankData(result.data.result);
       })
@@ -47,6 +49,7 @@ const QuestionSet: React.FC = () => {
     question_type: "",
     job_rank: "",
     difficulty: "",
+    isFromQuestionBank: "",
     question_body: "",
     remarks: "",
     answer: "",
@@ -69,7 +72,6 @@ const QuestionSet: React.FC = () => {
   };
 
   const handleData = (e: any) => {
-    
     const { name, value } = e.target;
     setValue((val: any) => {
       return {
@@ -103,6 +105,7 @@ const QuestionSet: React.FC = () => {
       question_type: "",
       job_rank: "",
       difficulty: "",
+      isFromQuestionBank: "",
       question_body: "",
       remarks: "",
       answer: "",
@@ -122,7 +125,6 @@ const QuestionSet: React.FC = () => {
       difficulty: postValue.difficulty,
       questions: questionArray,
     };
-    
 
     const createTable = async () => {
       await axios.post("http://localhost:8000/api/set/post", data);
@@ -134,7 +136,7 @@ const QuestionSet: React.FC = () => {
 
   const handleQuestionBank = (question: any) => {
     const { _id, ...rest } = question;
-    const newObject = { ...rest, bank_id: _id };
+    const newObject = { ...rest, bank_id: _id, isFromQuestionBank: _id };
     const newQuesArr = [...questionArray, newObject];
     setQuestionArray(newQuesArr);
   };
@@ -173,7 +175,11 @@ const QuestionSet: React.FC = () => {
             </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Technology</label>
-              <select className="form-select" name="technology"  onChange={handleData}>
+              <select
+                className="form-select"
+                name="technology"
+                onChange={handleData}
+              >
                 <option selected>Open this select menu</option>
                 <option value="react">React</option>
                 <option value="php">Php</option>
@@ -184,7 +190,11 @@ const QuestionSet: React.FC = () => {
             </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Job Rank</label>
-              <select className="form-select" name="job_rank"  onChange={handleData}>
+              <select
+                className="form-select"
+                name="job_rank"
+                onChange={handleData}
+              >
                 <option selected>Open this select menu</option>
                 <option value="4a">4A</option>
                 <option value="6a">6A</option>
@@ -194,7 +204,11 @@ const QuestionSet: React.FC = () => {
 
             <div className="mb-3 col-lg-6 col-md-6 col-12">
               <label className="form-label">Difficulty</label>
-              <select className="form-select" name="difficulty" onChange={handleData}>
+              <select
+                className="form-select"
+                name="difficulty"
+                onChange={handleData}
+              >
                 <option selected>Open this select menu</option>
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
@@ -219,44 +233,61 @@ const QuestionSet: React.FC = () => {
                 <div className="row">
                   <div className="mb-3 col-lg-6 col-md-6 col-12">
                     <label className="form-label">Technology</label>
-                    <select className="form-select" name="technology"  onChange={handleQuestionData}>
-                    <option selected>Open this select menu</option>
-                    <option value="react">React</option>
-                    <option value="php">Php</option>
-                    <option value="nodejs">NodeJs</option>
-                    <option value="java">Java</option>
-                    <option value="ios">iOS</option>
-                  </select>
+                    <select
+                      className="form-select"
+                      name="technology"
+                      onChange={handleQuestionData}
+                    >
+                      <option selected>Open this select menu</option>
+                      <option value="react">React</option>
+                      <option value="php">Php</option>
+                      <option value="nodejs">NodeJs</option>
+                      <option value="java">Java</option>
+                      <option value="ios">iOS</option>
+                    </select>
                   </div>
                   <div className="mb-3 col-lg-6 col-md-6 col-12">
                     <label className="form-label">Question Type</label>
-                    <select className="form-select" name="question_type"  onChange={handleQuestionData}>
-                    <option selected>Open this select menu</option>
-                    <option value="mcq">MCQ</option>
-                    <option value="coding">Coding</option>
-                    <option value="text">Text</option>
-                    <option value="drawing">Drawing</option>
-                    <option value="uml">UML</option>
-                    <option value="video">Video</option>
-                  </select>
+                    <select
+                      className="form-select"
+                      name="question_type"
+                      onChange={handleQuestionData}
+                    >
+                      <option selected>Open this select menu</option>
+                      <option value="mcq">MCQ</option>
+                      <option value="coding">Coding</option>
+                      <option value="text">Text</option>
+                      <option value="drawing">Drawing</option>
+                      <option value="uml">UML</option>
+                      <option value="video">Video</option>
+                    </select>
                   </div>
                   <div className="mb-3 col-lg-6 col-md-6 col-12">
                     <label className="form-label">Job Rank</label>
-                    <select className="form-select" name="job_rank"  onChange={handleQuestionData}>
-                    <option selected>Open this select menu</option>
-                    <option value="4a">4A</option>
-                    <option value="6a">6A</option>
-                    <option value="7c">7C</option>
-                  </select>
+                    <select
+                      className="form-select"
+                      name="job_rank"
+                      onChange={handleQuestionData}
+                    >
+                      <option selected>Open this select menu</option>
+                      <option value="4a">4A</option>
+                      <option value="6a">6A</option>
+                      <option value="7c">7C</option>
+                    </select>
                   </div>
                   <div className="mb-3 col-lg-6 col-md-6 col-12">
                     <label className="form-label">Difficulty</label>
-                    <select className="form-select" name="difficulty" onChange={handleQuestionData} required>
-                    <option selected>Open this select menu</option>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                  </select>
+                    <select
+                      className="form-select"
+                      name="difficulty"
+                      onChange={handleQuestionData}
+                      required
+                    >
+                      <option selected>Open this select menu</option>
+                      <option value="easy">Easy</option>
+                      <option value="medium">Medium</option>
+                      <option value="hard">Hard</option>
+                    </select>
                   </div>
                   <div className="mb-3 col-lg-6 col-md-6 col-12">
                     <label className="form-label">Remarks</label>
@@ -333,6 +364,7 @@ const QuestionSet: React.FC = () => {
               <tr className="table-dark">
                 <th scope="col">id</th>
                 <th scope="col">Title</th>
+                <th scope="col">From Question Bank</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -343,6 +375,7 @@ const QuestionSet: React.FC = () => {
                     <tr key={id}>
                       <th scope="row">{id + 1}</th>
                       <td>{element.question_body}</td>
+                      <td>{element.isFromQuestionBank ? "Yes" : "No"}</td>
                       <td className="d-flex justify-content-between">
                         <button
                           className="btn btn-danger"
@@ -371,8 +404,13 @@ const QuestionSet: React.FC = () => {
               <h3>All Questions</h3>
             </div>
             <div>
-              <select className="form-select" onChange={(e:any)=>setSelectedData(e.target.value)}>
-                <option selected value="all">All</option>
+              <select
+                className="form-select"
+                onChange={(e: any) => setSelectedData(e.target.value)}
+              >
+                <option selected value="all">
+                  All
+                </option>
                 <option value="react">React</option>
                 <option value="php">Php</option>
                 <option value="nodejs">NodeJs</option>
